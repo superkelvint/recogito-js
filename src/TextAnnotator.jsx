@@ -6,7 +6,7 @@ import RelationsLayer from './relations/RelationsLayer';
 import RelationEditor from './relations/editor/RelationEditor';
 
 import './TextAnnotator.scss';
-
+import { useEffect, useRef, useState } from 'react';
 /**
  * Pulls the strings between the annotation highlight layer
  * and the editor popup.
@@ -68,7 +68,7 @@ export default class TextAnnotator extends Component {
   }
 
   onChanged = () => {
-    // Disable selection outside of the editor 
+    // Disable selection outside of the editor
     // when user makes the first change
     this.selectionHandler.enabled = false;
   }
@@ -378,6 +378,14 @@ export default class TextAnnotator extends Component {
     const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;
 
     const readOnly = this.state.readOnly || this.state.selectedAnnotation?.readOnly;
+
+    useEffect(() => {
+      if (this.state.selectedAnnotation) {
+        console.log('Editor component has mounted');
+        // Fire your event here
+        this.props.onTextSelected(null, null);
+      }
+    }, [this.state.selectedAnnotation]);
 
     return (open && (
       <>
