@@ -74,6 +74,7 @@ export class Recogito {
         contentEl={contentEl}
         wrapperEl={this._wrapperEl}
         config={config}
+        onTextSelected={this.handleTextSelected}
         onAnnotationSelected={this.handleAnnotationSelected}
         onAnnotationCreated={this.handleAnnotationCreated}
         onAnnotationUpdated={this.handleAnnotationUpdated}
@@ -81,6 +82,9 @@ export class Recogito {
         onCancelSelected={this.handleCancelSelected}
         relationVocabulary={config.relationVocabulary} />, this._appContainerEl);
   }
+
+  handleTextSelected = (annotation, element) =>
+    this._emitter.emit('selectText', annotation, element);
 
   handleAnnotationSelected = (annotation, element) =>
     this._emitter.emit('selectAnnotation', annotation.underlying, element);
